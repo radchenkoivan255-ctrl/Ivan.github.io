@@ -1,0 +1,731 @@
+/* ========== НОВА ПАЛІТРА (тепла темна + м'який зелений) ========== */
+:root {
+    --bg-primary: #0c0c0e;
+    --bg-secondary: #141417;
+    --bg-tertiary: #1e1e22;
+    --border: #2a2a2f;
+    --accent: #5abf8a;
+    --accent-dark: #3d9b6a;
+    --text-primary: #eeeeee;
+    --text-secondary: #a8a8b2;
+    --text-gold: #d4b85a;
+    --text-purple: #b87cd4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Хедер */
+header {
+    background-color: var(--bg-secondary);
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Гамбургер */
+.hamburger {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.hamburger:hover {
+    color: var(--accent);
+}
+
+/* Сайдбар */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-secondary);
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    border-right: 1px solid var(--border);
+}
+
+.sidebar button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    display: block;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sidebar button:hover {
+    color: var(--accent);
+    background-color: var(--bg-tertiary);
+}
+
+/* Основний контент */
+main {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Фільтри */
+#filters {
+    background-color: var(--bg-secondary);
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+}
+
+#filters h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+#filters select {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+#filters select:hover {
+    border-color: var(--accent);
+}
+
+/* Сітка карток */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent);
+}
+
+.card h3 {
+    margin: 12px 0 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card p {
+    margin: 6px 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Сторінка деталей */
+.agent-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-section {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+}
+
+.portrait-container {
+    flex: 0 0 280px;
+}
+
+.large-portrait {
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid var(--accent);
+    background: var(--bg-tertiary);
+}
+
+.stats-container {
+    flex: 1;
+    background: var(--bg-tertiary);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.stats-container h2 {
+    color: var(--accent);
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.stat-name {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.stat-value {
+    color: var(--text-gold);
+    font-weight: 500;
+}
+
+/* Навички */
+.skills-section {
+    background: transparent;
+    padding: 0;
+}
+
+.skills-section h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+    padding-bottom: 6px;
+}
+
+.skill-block {
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--accent);
+    transition: all 0.2s;
+}
+
+.skill-block:hover {
+    background: var(--bg-tertiary);
+    transform: translateX(4px);
+}
+
+.skill-block h3 {
+    color: var(--accent);
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.skill-block p,
+.skill-block div {
+    color: var(--text-primary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mindscape Cinema */
+.mindscape-cinema-section {
+    margin-top: 48px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 24px;
+}
+
+.cinema-title {
+    color: var(--accent);
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+#cinemaGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.cinema-card {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    border-top: 3px solid var(--accent);
+}
+
+.cinema-level {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.cinema-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.cinema-desc {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+    #cinemaGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Кнопка назад */
+.back-btn {
+    display: inline-block;
+    background: var(--bg-tertiary);
+    color: var(--accent);
+    padding: 8px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+}
+
+/* Кнопки фільтрів (якщо використовуються) */
+#elementButtons button,
+#roleButtons button {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 6px 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#elementButtons button:hover,
+#roleButtons button:hover {
+    background-color: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+}
+
+/* Ранги та елементи (залишаємо але приглушені) */
+.rarity-S {
+    color: var(--text-gold);
+    font-weight: bold;
+}
+
+.rarity-A {
+    color: var(--text-purple);
+    font-weight: bold;
+}
+
+.element-Ice,
+.element-ice {
+    color: #98EFF0;
+    font-weight: bold;
+}
+
+.element-Fire,
+.element-fire {
+    color: #FF5521;
+    font-weight: bold;
+}
+
+.element-Electric,
+.element-electric {
+    color: #2EB6FF;
+    font-weight: bold;
+}
+
+.element-Ether,
+.element-ether {
+    color: #FE437E;
+    font-weight: bold;
+}
+
+.element-Physical,
+.element-physical {
+    color: #F0D12B;
+    font-weight: bold;
+}
+
+.element-Wind,
+.element-wind {
+    color: #A6C5FD;
+    font-weight: bold;
+}
+
+/* Додаткові класи */
+.highlight-white {
+    color: var(--text-primary) !important;
+    font-weight: bold !important;
+}
+
+.highlight-green {
+    color: #3d9b6a;
+    font-weight: bold;
+}
+
+
+
+/* Зменшуємо картки та підлаштовуємо фото для всіх розділів */
+.card {
+    padding: 10px;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-image {
+    width: auto !important;
+    height: auto !important;
+    max-width: 200px !important;
+    max-height: 140px !important;
+    object-fit: scale-down !important;
+    margin-bottom: 8px;
+}
+
+/* Додатково прибираємо можливе обрізання */
+.card {
+    overflow: visible;
+}
+
+/* Прибираємо зелену рамку навколо фото */
+.large-portrait {
+    border: none !important;
+}
+
+/* Стиль для блоку ефекту ампліфікатора (в правій колонці) */
+#wengineEffect .skill-block {
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    padding: 20px 24px;
+    border-left: 4px solid var(--accent);
+    margin-top: 20px;
+}
+
+/* Хедер з фоновим зображенням */
+header {
+    position: relative;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('image/WhatsApp Image 2026-05-09 at 13.13.29.jpeg');
+    background-size: cover;
+    background-position: center 25%;
+    background-repeat: no-repeat;
+    height: 100px;
+    border-bottom: 1px solid var(--accent);
+}
+
+header h1 {
+    font-size: 2.2rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+header::before {
+    background-size: auto 80%;
+    /* фото займе 80% висоти хедера */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+header {
+    min-height: 135px;
+}
+
+/* Стилі для обох блоків фільтрів */
+.filters-section {
+    background-color: var(--bg-secondary);
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+}
+
+.filters-section h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.filters-section select {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.filters-section select:hover {
+    border-color: var(--accent);
+}
+
+/* Горизонтальні фільтри в стилі GachaBase */
+.gacha-filters-horizontal {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+}
+
+.filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Кнопка Factions та випадаюча панель */
+.factions-dropdown {
+    position: relative;
+}
+
+.factions-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 6px 16px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.arrow-down {
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.factions-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    width: 260px;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.factions-panel.open {
+    display: block;
+}
+
+.factions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.faction-option {
+    background: var(--bg-tertiary);
+    border: none;
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.faction-option:hover {
+    background: var(--accent);
+    color: var(--bg-primary);
+}
+
+/* Іконкові кнопки фільтрів */
+.filter-icon-group {
+    display: flex;
+    gap: 6px;
+}
+
+.filter-icon-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.filter-icon-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.filter-icon-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-primary);
+}
+
+/* Кнопка Reset (червоний контур, червоний текст, іконка кошика) */
+.reset-btn-gacha {
+    background: transparent;
+    border: 1px solid #ff5555;
+    color: #ff5555;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.reset-btn-gacha:hover {
+    background: #ff5555;
+    color: #000;
+}
+
+/* Адаптація для мобільних – кнопки переносяться */
+@media (max-width: 800px) {
+    .filters-row {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+.filter-icon,
+.filter-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+.filter-icon {
+    margin-right: 6px;
+}
+
+.filter-icon-btn,
+.wengine-filter-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-icon-btn:hover,
+.wengine-filter-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.filter-icon-btn.active,
+.wengine-filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Кнопки фільтрів для ампліфікаторів */
+.wengine-filter-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.wengine-filter-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.wengine-filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.role-icon-small {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.element-icon-small {
+    width: 20px;
+    height: 20px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
