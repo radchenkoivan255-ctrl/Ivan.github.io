@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenless Zone Zero - Деталі</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body id="detailBody">
+    <header class="header-detail"
+        style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <h1 id="agentName" style="margin: 0;"></h1>
+        <a id="backToList" class="back-btn">← Назад до списку</a>
+    </header>
+
+    <main class="agent-page">
+        <section class="hero-section">
+            <div class="portrait-container">
+                <img id="agentImage" src="" alt="Агент" class="large-portrait">
+            </div>
+            <div class="stats-container">
+                <h2 id="statsTitle">INFO</h2>
+                <div class="stats-list" id="agentStats"></div>
+                <div id="wengineEffect" style="margin-top: 20px;"></div>
+            </div>
+        </section>
+        <section class="skills-section" id="skillsSection">
+            <h2 id="skillsTitle">ОПИС</h2>
+            <div id="skillsList"></div>
+        </section>
+        <section class="mindscape-cinema-section" id="mindscapeCinemaSection" style="display: none;">
+            <h2 class="cinema-title">🎬 MINDSCAPE CINEMA</h2>
+            <div class="cinema-grid" id="cinemaGrid"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        // Додаємо клас для body на основі типу
+        const body = document.getElementById('detailBody');
+        if (body) {
+            body.classList.add(type + '-page');
+        }
+        const id = parseInt(urlParams.get('id'));
+
+        const backBtn = document.getElementById('backToList');
+        if (backBtn && type) {
+            backBtn.href = `index.html?section=${type}`;
+        }
+
+        function displayItem() {
+            if (!type || !id) {
+                document.body.innerHTML = '<h1 style="text-align:center;">Помилка</h1><div style="text-align:center;"><a href="index.html">← На головну</a></div>';
+                return;
+            }
+
+            let dataArray;
+            if (type === 'agents') dataArray = agents;
+            else if (type === 'wengines') dataArray = wengines;
+            else if (type === 'bangboo') dataArray = bangboo;
+            else if (type === 'drivediscs') dataArray = drivediscs;
+            else {
+                document.body.innerHTML = '<h1 style="text-align:center;">Невідомий тип</h1><div style="text-align:center;"><a href="index.html">← На головну</a></div>';
+                return;
+            }
+
+            const item = dataArray.find(it => it.id === id);
+            if (!item) {
+                document.body.innerHTML = '<h1 style="text-align:center;">Не знайдено</h1><div style="text-align:center;"><a href="index.html">← На головну</a></div>';
+                return;
+            }
+
+            // Ім'я, ранг, елемент
+            let rarityClass = item.rarity === 'S' ? 'rarity-S' : (item.rarity === 'A' ? 'rarity-A' : '');
+            let elementClass = '';
+            if (item.element) {
+                const map = { 'Ice': 'element-Ice', 'Fire': 'element-Fire', 'Electric': 'element-Electric', 'Ether': 'element-Ether', 'Physical': 'element-Physical' };
+                elementClass = map[item.element] || '';
+            }
+            let nameHtml = item.name;
+            if (item.rarity) nameHtml += ` <span class="${rarityClass}">${item.rarity}</span>`;
+            if (item.element) nameHtml += ` <span class="${elementClass}">${item.element}</span>`;
+            if (item.faction) nameHtml += ` <span style="color: #c0c0c0; font-size: 1.1rem; margin-left: 8px;">${item.faction}</span>`;
+            document.getElementById('agentName').innerHTML = nameHtml;
+            document.getElementById('agentImage').src = item.image || 'https://via.placeholder.com/500x700?text=' + item.name;
+
+            let statsTitle = 'INFO';
+            let skillsTitle = 'W-ENGINE EFFECT';
+            let statsHtml = '';
+            let skillsHtml = '';
+            let wengineEffectHtml = '';
+
+            const skillsSection = document.getElementById('skillsSection');
+            const wengineEffectDiv = document.getElementById('wengineEffect');
+
+            if (type === 'agents') {
+                statsTitle = 'STATS';
+                skillsTitle = 'SKILLS';
+                if (item.stats) {
+                    for (const [key, value] of Object.entries(item.stats)) {
+                        statsHtml += `<div class="stat-row"><span class="stat-name">${key}</span><span class="stat-value">${value}</span></div>`;
+                    }
+                }
+                if (item.skills) {
+                    for (const [name, desc] of Object.entries(item.skills)) {
+                        skillsHtml += `<div class="skill-block"><h3>${name}</h3><div>${desc}</div></div>`;
+                    }
+                }
+                skillsSection.style.display = 'block';
+                wengineEffectDiv.style.display = 'none';
+            }
+            else if (type === 'bangboo') {
+                statsTitle = 'STATS';
+                skillsTitle = 'SKILLS';
+                statsHtml = '';
+
+                // Статистика (HP, ATK тощо)
+                if (item.stats && Object.keys(item.stats).length > 0) {
+                    for (const [key, value] of Object.entries(item.stats)) {
+                        statsHtml += `<div class="stat-row"><span class="stat-name">${key}</span><span class="stat-value">${value}</span></div>`;
+                    }
+                }
+
+                // Навички (skills)
+                if (item.skills) {
+                    if (typeof item.skills === 'string') {
+                        skillsHtml = `<div class="skill-block"><p>${item.skills}</p></div>`;
+                    } else {
+                        for (const [name, desc] of Object.entries(item.skills)) {
+                            skillsHtml += `<div class="skill-block"><h3>${name}</h3><p>${desc}</p></div>`;
+                        }
+                    }
+                }
+            }
+            else if (type === 'wengines') {
+                statsTitle = ' STATS ';
+                statsHtml = '';
+                skillsHtml = '';
+
+                // Тільки стати (без рангу та ролі)
+                if (item.stats && Object.keys(item.stats).length > 0) {
+                    for (const [key, value] of Object.entries(item.stats)) {
+                        statsHtml += `<div class="stat-row"><span class="stat-name">${key}</span><span class="stat-value">${value}</span></div>`;
+                    }
+                }
+
+                // Ефект (W-Engine Effect)
+                if (item.skills) {
+                    for (const [name, desc] of Object.entries(item.skills)) {
+                        skillsHtml += `<div class="skill-block"><h3>${name}</h3><div>${desc}</div></div>`;
+                    }
+                }
+            }
+            else if (type === 'drivediscs') {
+                // Драйв-диски: ефекти показуємо в правій колонці (stats-container), а окрему секцію ховаємо
+                statsTitle = 'EFFECT DRIVE-DISCS';
+                skillsTitle = '';
+                statsHtml = '';
+                if (item.skills) {
+                    for (const [name, desc] of Object.entries(item.skills)) {
+                        statsHtml += `<div class="skill-block"><h3>${name}</h3><p>${desc}</p></div>`;
+                    }
+                } else {
+                    statsHtml = '<p style="color:#888;">Ефекти відсутні</p>';
+                }
+                skillsHtml = ''; // нічого в нижній секції
+                skillsSection.style.display = 'none';
+                wengineEffectDiv.style.display = 'none';
+            }
+
+            document.getElementById('statsTitle').innerHTML = statsTitle;
+            document.getElementById('skillsTitle').innerHTML = skillsTitle;
+            document.getElementById('agentStats').innerHTML = statsHtml || '<p style="color:#888;">Немає даних</p>';
+            document.getElementById('skillsList').innerHTML = skillsHtml || '';
+            if (wengineEffectDiv) wengineEffectDiv.innerHTML = wengineEffectHtml;
+
+            // Mindscape Cinema (тільки для агентів)
+            if (type === 'agents' && item.mindscapes && item.mindscapes.length === 6) {
+                const cinemaSection = document.getElementById('mindscapeCinemaSection');
+                const cinemaGrid = document.getElementById('cinemaGrid');
+                if (cinemaSection && cinemaGrid) {
+                    cinemaSection.style.display = 'block';
+                    cinemaGrid.innerHTML = '';
+                    const cards = [];
+                    item.mindscapes.forEach((ms) => {
+                        const card = document.createElement('div');
+                        card.className = 'cinema-card';
+                        card.innerHTML = `
+                            <div class="cinema-level">MINDSCOPE ${ms.number}</div>
+                            <div class="cinema-name">${ms.name}</div>
+                            <div class="cinema-desc">${ms.desc}</div>
+                        `;
+                        cinemaGrid.appendChild(card);
+                        cards.push(card);
+                    });
+                    function setPairHeights() {
+                        cards.forEach(c => c.style.height = '');
+                        const heights = cards.map(c => c.offsetHeight);
+                        const pairs = [[0, 1], [2, 3], [4, 5]];
+                        pairs.forEach(([i1, i2]) => {
+                            const maxH = Math.max(heights[i1], heights[i2]);
+                            cards[i1].style.height = maxH + 'px';
+                            cards[i2].style.height = maxH + 'px';
+                        });
+                    }
+                    setPairHeights();
+                    window.addEventListener('load', setPairHeights);
+                    setTimeout(setPairHeights, 100);
+                }
+            }
+        }
+
+        if (type === 'drivediscs') {
+            document.getElementById('detailBody').classList.add('drivediscs-page');
+        }
+
+        displayItem();
+    </script>
+</body>
+
+</html>
