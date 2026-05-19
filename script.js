@@ -2749,13 +2749,13 @@ const wengines = [
     },
     {
         id: 38,
-        name: "Energetic Strike",
+        name: "Neon Fantasies",
         rarity: "S",
-        role: "Anomaly",
+        role: "Stun",
         image: "image2/WhatsApp Image 2026-05-12 at 15.51.22.jpeg",
         stats: {
             "ATK": "713",
-            "Crit rate": "24%"
+            "Anomaly Mastery": "30%"
         },
         skills: {
 
